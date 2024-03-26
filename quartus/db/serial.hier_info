@@ -1,11 +1,26 @@
 |serial
-fpga_clock => fpga_clock.IN2
-enable => enable.IN1
-tx <= uart_tx:UART_TX_INST.o_Tx_Serial
-done <= uart_tx:UART_TX_INST.o_Tx_Done
-busy <= uart_tx:UART_TX_INST.o_Tx_Active
-db_clock <= fpga_clock.DB_MAX_OUTPUT_PORT_TYPE
-db_botao <= enable.DB_MAX_OUTPUT_PORT_TYPE
+clock => clock.IN3
+iniciar_transmissao => iniciar_transmissao.IN1
+entrada_serial => entrada_serial.IN1
+saida_serial << uart_tx:UART_TX_INST.o_Tx_Serial
+transmissor_acabou << uart_tx:UART_TX_INST.o_Tx_Done
+transmissor_ocupado << uart_tx:UART_TX_INST.o_Tx_Active
+hex0_out[0] << hexa7seg:hex0.display
+hex0_out[1] << hexa7seg:hex0.display
+hex0_out[2] << hexa7seg:hex0.display
+hex0_out[3] << hexa7seg:hex0.display
+hex0_out[4] << hexa7seg:hex0.display
+hex0_out[5] << hexa7seg:hex0.display
+hex0_out[6] << hexa7seg:hex0.display
+hex1_out[0] << hexa7seg:hex1.display
+hex1_out[1] << hexa7seg:hex1.display
+hex1_out[2] << hexa7seg:hex1.display
+hex1_out[3] << hexa7seg:hex1.display
+hex1_out[4] << hexa7seg:hex1.display
+hex1_out[5] << hexa7seg:hex1.display
+hex1_out[6] << hexa7seg:hex1.display
+db_botao << iniciar_transmissao.DB_MAX_OUTPUT_PORT_TYPE
+receptor_acabou << <GND>
 
 
 |serial|uart_tx:UART_TX_INST
@@ -68,5 +83,74 @@ reset => reg1.ACLR
 reset => reg0.ACLR
 sinal => reg0.DATAIN
 pulso <= pulso.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|serial|uart_rx:uart_rx
+i_Clock => r_Rx_Byte[0].CLK
+i_Clock => r_Rx_Byte[1].CLK
+i_Clock => r_Rx_Byte[2].CLK
+i_Clock => r_Rx_Byte[3].CLK
+i_Clock => r_Rx_Byte[4].CLK
+i_Clock => r_Rx_Byte[5].CLK
+i_Clock => r_Rx_Byte[6].CLK
+i_Clock => r_Rx_Byte[7].CLK
+i_Clock => r_Bit_Index[0].CLK
+i_Clock => r_Bit_Index[1].CLK
+i_Clock => r_Bit_Index[2].CLK
+i_Clock => r_Clock_Count[0].CLK
+i_Clock => r_Clock_Count[1].CLK
+i_Clock => r_Clock_Count[2].CLK
+i_Clock => r_Clock_Count[3].CLK
+i_Clock => r_Clock_Count[4].CLK
+i_Clock => r_Clock_Count[5].CLK
+i_Clock => r_Clock_Count[6].CLK
+i_Clock => r_Clock_Count[7].CLK
+i_Clock => r_Clock_Count[8].CLK
+i_Clock => r_Clock_Count[9].CLK
+i_Clock => r_Clock_Count[10].CLK
+i_Clock => r_Clock_Count[11].CLK
+i_Clock => r_Clock_Count[12].CLK
+i_Clock => r_Rx_DV.CLK
+i_Clock => r_Rx_Data.CLK
+i_Clock => r_Rx_Data_R.CLK
+i_Clock => r_SM_Main~1.DATAIN
+i_Rx_Serial => r_Rx_Data_R.DATAIN
+o_Rx_DV <= r_Rx_DV.DB_MAX_OUTPUT_PORT_TYPE
+o_Rx_Byte[0] <= r_Rx_Byte[0].DB_MAX_OUTPUT_PORT_TYPE
+o_Rx_Byte[1] <= r_Rx_Byte[1].DB_MAX_OUTPUT_PORT_TYPE
+o_Rx_Byte[2] <= r_Rx_Byte[2].DB_MAX_OUTPUT_PORT_TYPE
+o_Rx_Byte[3] <= r_Rx_Byte[3].DB_MAX_OUTPUT_PORT_TYPE
+o_Rx_Byte[4] <= r_Rx_Byte[4].DB_MAX_OUTPUT_PORT_TYPE
+o_Rx_Byte[5] <= r_Rx_Byte[5].DB_MAX_OUTPUT_PORT_TYPE
+o_Rx_Byte[6] <= r_Rx_Byte[6].DB_MAX_OUTPUT_PORT_TYPE
+o_Rx_Byte[7] <= r_Rx_Byte[7].DB_MAX_OUTPUT_PORT_TYPE
+
+
+|serial|hexa7seg:hex0
+hexa[0] => Decoder0.IN3
+hexa[1] => Decoder0.IN2
+hexa[2] => Decoder0.IN1
+hexa[3] => Decoder0.IN0
+display[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
+display[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
+display[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
+display[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
+display[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
+display[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+display[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|serial|hexa7seg:hex1
+hexa[0] => Decoder0.IN3
+hexa[1] => Decoder0.IN2
+hexa[2] => Decoder0.IN1
+hexa[3] => Decoder0.IN0
+display[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
+display[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
+display[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
+display[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
+display[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
+display[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+display[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
 
 

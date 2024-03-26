@@ -1,5 +1,5 @@
 Analysis & Synthesis report for serial
-Tue Mar 26 14:21:20 2024
+Tue Mar 26 16:34:02 2024
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -13,16 +13,19 @@ Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
   5. Analysis & Synthesis Source Files Read
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
-  8. State Machine - |serial|uart_tx:UART_TX_INST|r_SM_Main
-  9. Registers Removed During Synthesis
- 10. General Register Statistics
- 11. Multiplexer Restructuring Statistics (Restructuring Performed)
- 12. Parameter Settings for User Entity Instance: uart_tx:UART_TX_INST
- 13. Port Connectivity Checks: "edge_detector:edge_detector"
- 14. Port Connectivity Checks: "uart_tx:UART_TX_INST"
- 15. Post-Synthesis Netlist Statistics for Top Partition
- 16. Elapsed Time Per Partition
- 17. Analysis & Synthesis Messages
+  8. State Machine - |serial|uart_rx:uart_rx|r_SM_Main
+  9. State Machine - |serial|uart_tx:UART_TX_INST|r_SM_Main
+ 10. Registers Removed During Synthesis
+ 11. General Register Statistics
+ 12. Inverted Register Statistics
+ 13. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 14. Parameter Settings for User Entity Instance: uart_tx:UART_TX_INST
+ 15. Parameter Settings for User Entity Instance: uart_rx:uart_rx
+ 16. Port Connectivity Checks: "edge_detector:edge_detector"
+ 17. Port Connectivity Checks: "uart_tx:UART_TX_INST"
+ 18. Post-Synthesis Netlist Statistics for Top Partition
+ 19. Elapsed Time Per Partition
+ 20. Analysis & Synthesis Messages
 
 
 
@@ -49,14 +52,14 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Tue Mar 26 14:21:20 2024       ;
+; Analysis & Synthesis Status     ; Successful - Tue Mar 26 16:34:02 2024       ;
 ; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name                   ; serial                                      ;
 ; Top-level Entity Name           ; serial                                      ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 27                                          ;
-; Total pins                      ; 7                                           ;
+; Total registers                 ; 67                                          ;
+; Total pins                      ; 22                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 0                                           ;
 ; Total DSP Blocks                ; 0                                           ;
@@ -178,37 +181,39 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------+-----------------+------------------------+---------------------------------------------------------------------------------+---------+
 ; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                                                    ; Library ;
 +----------------------------------+-----------------+------------------------+---------------------------------------------------------------------------------+---------+
+; ../hexa7seg.v                    ; yes             ; User Verilog HDL File  ; C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/hexa7seg.v      ;         ;
 ; ../edge_detector.v               ; yes             ; User Verilog HDL File  ; C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/edge_detector.v ;         ;
 ; ../uart_tx.v                     ; yes             ; User Verilog HDL File  ; C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_tx.v       ;         ;
+; ../uart_rx.v                     ; yes             ; User Verilog HDL File  ; C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_rx.v       ;         ;
 ; ../serial.v                      ; yes             ; User Verilog HDL File  ; C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/serial.v        ;         ;
 +----------------------------------+-----------------+------------------------+---------------------------------------------------------------------------------+---------+
 
 
-+----------------------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary                    ;
-+---------------------------------------------+------------------+
-; Resource                                    ; Usage            ;
-+---------------------------------------------+------------------+
-; Estimate of Logic utilization (ALMs needed) ; 19               ;
-;                                             ;                  ;
-; Combinational ALUT usage for logic          ; 32               ;
-;     -- 7 input functions                    ; 0                ;
-;     -- 6 input functions                    ; 5                ;
-;     -- 5 input functions                    ; 7                ;
-;     -- 4 input functions                    ; 5                ;
-;     -- <=3 input functions                  ; 15               ;
-;                                             ;                  ;
-; Dedicated logic registers                   ; 27               ;
-;                                             ;                  ;
-; I/O pins                                    ; 7                ;
-;                                             ;                  ;
-; Total DSP Blocks                            ; 0                ;
-;                                             ;                  ;
-; Maximum fan-out node                        ; fpga_clock~input ;
-; Maximum fan-out                             ; 28               ;
-; Total fan-out                               ; 208              ;
-; Average fan-out                             ; 2.85             ;
-+---------------------------------------------+------------------+
++-----------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary               ;
++---------------------------------------------+-------------+
+; Resource                                    ; Usage       ;
++---------------------------------------------+-------------+
+; Estimate of Logic utilization (ALMs needed) ; 57          ;
+;                                             ;             ;
+; Combinational ALUT usage for logic          ; 93          ;
+;     -- 7 input functions                    ; 0           ;
+;     -- 6 input functions                    ; 20          ;
+;     -- 5 input functions                    ; 14          ;
+;     -- 4 input functions                    ; 23          ;
+;     -- <=3 input functions                  ; 36          ;
+;                                             ;             ;
+; Dedicated logic registers                   ; 67          ;
+;                                             ;             ;
+; I/O pins                                    ; 22          ;
+;                                             ;             ;
+; Total DSP Blocks                            ; 0           ;
+;                                             ;             ;
+; Maximum fan-out node                        ; clock~input ;
+; Maximum fan-out                             ; 67          ;
+; Total fan-out                               ; 587         ;
+; Average fan-out                             ; 2.88        ;
++---------------------------------------------+-------------+
 
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -216,11 +221,28 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------+---------------+--------------+
 ; Compilation Hierarchy Node       ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                 ; Entity Name   ; Library Name ;
 +----------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------+---------------+--------------+
-; |serial                          ; 32 (0)              ; 27 (0)                    ; 0                 ; 0          ; 7    ; 0            ; |serial                             ; serial        ; work         ;
+; |serial                          ; 93 (3)              ; 67 (8)                    ; 0                 ; 0          ; 22   ; 0            ; |serial                             ; serial        ; work         ;
 ;    |edge_detector:edge_detector| ; 0 (0)               ; 2 (2)                     ; 0                 ; 0          ; 0    ; 0            ; |serial|edge_detector:edge_detector ; edge_detector ; work         ;
+;    |hexa7seg:hex0|               ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |serial|hexa7seg:hex0               ; hexa7seg      ; work         ;
+;    |hexa7seg:hex1|               ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |serial|hexa7seg:hex1               ; hexa7seg      ; work         ;
+;    |uart_rx:uart_rx|             ; 44 (44)             ; 32 (32)                   ; 0                 ; 0          ; 0    ; 0            ; |serial|uart_rx:uart_rx             ; uart_rx       ; work         ;
 ;    |uart_tx:UART_TX_INST|        ; 32 (32)             ; 25 (25)                   ; 0                 ; 0          ; 0    ; 0            ; |serial|uart_tx:UART_TX_INST        ; uart_tx       ; work         ;
 +----------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------+---------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++------------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |serial|uart_rx:uart_rx|r_SM_Main                                                                                              ;
++--------------------------+-------------------------+--------------------------+--------------------------+---------------+---------------------+
+; Name                     ; r_SM_Main.s_RX_STOP_BIT ; r_SM_Main.s_RX_DATA_BITS ; r_SM_Main.s_RX_START_BIT ; r_SM_Main.000 ; r_SM_Main.s_CLEANUP ;
++--------------------------+-------------------------+--------------------------+--------------------------+---------------+---------------------+
+; r_SM_Main.000            ; 0                       ; 0                        ; 0                        ; 0             ; 0                   ;
+; r_SM_Main.s_RX_START_BIT ; 0                       ; 0                        ; 1                        ; 1             ; 0                   ;
+; r_SM_Main.s_RX_DATA_BITS ; 0                       ; 1                        ; 0                        ; 1             ; 0                   ;
+; r_SM_Main.s_RX_STOP_BIT  ; 1                       ; 0                        ; 0                        ; 1             ; 0                   ;
+; r_SM_Main.s_CLEANUP      ; 0                       ; 0                        ; 0                        ; 1             ; 1                   ;
++--------------------------+-------------------------+--------------------------+--------------------------+---------------+---------------------+
 
 
 Encoding Type:  One-Hot
@@ -244,9 +266,11 @@ Encoding Type:  One-Hot
 +----------------------------------------+-----------------------------------------------+
 ; uart_tx:UART_TX_INST|r_Tx_Data[1..5,7] ; Stuck at GND due to stuck port data_in        ;
 ; uart_tx:UART_TX_INST|r_Tx_Data[6]      ; Merged with uart_tx:UART_TX_INST|r_Tx_Data[0] ;
+; uart_rx:uart_rx|r_SM_Main~2            ; Lost fanout                                   ;
+; uart_rx:uart_rx|r_SM_Main~3            ; Lost fanout                                   ;
 ; uart_tx:UART_TX_INST|r_SM_Main~2       ; Lost fanout                                   ;
 ; uart_tx:UART_TX_INST|r_SM_Main~3       ; Lost fanout                                   ;
-; Total Number of Removed Registers = 9  ;                                               ;
+; Total Number of Removed Registers = 11 ;                                               ;
 +----------------------------------------+-----------------------------------------------+
 
 
@@ -255,24 +279,40 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 27    ;
-; Number of registers using Synchronous Clear  ; 13    ;
+; Total registers                              ; 67    ;
+; Number of registers using Synchronous Clear  ; 26    ;
 ; Number of registers using Synchronous Load   ; 0     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 13    ;
+; Number of registers using Clock Enable       ; 34    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
 
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                               ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                     ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
-; 4:1                ; 13 bits   ; 26 LEs        ; 0 LEs                ; 26 LEs                 ; Yes        ; |serial|uart_tx:UART_TX_INST|r_Clock_Count[12] ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |serial|uart_tx:UART_TX_INST|r_Bit_Index       ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------+
++--------------------------------------------------+
+; Inverted Register Statistics                     ;
++----------------------------------------+---------+
+; Inverted Register                      ; Fan out ;
++----------------------------------------+---------+
+; dado_recebido[0]                       ; 7       ;
+; dado_recebido[4]                       ; 7       ;
+; dado_recebido[5]                       ; 7       ;
+; uart_rx:uart_rx|r_Rx_Data              ; 12      ;
+; uart_rx:uart_rx|r_Rx_Data_R            ; 1       ;
+; Total number of inverted registers = 5 ;         ;
++----------------------------------------+---------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                              ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
+; 4:1                ; 13 bits   ; 26 LEs        ; 0 LEs                ; 26 LEs                 ; Yes        ; |serial|uart_tx:UART_TX_INST|r_Clock_Count[5] ;
+; 7:1                ; 13 bits   ; 52 LEs        ; 0 LEs                ; 52 LEs                 ; Yes        ; |serial|uart_rx:uart_rx|r_Clock_Count[4]      ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |serial|uart_rx:uart_rx|r_Bit_Index           ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |serial|uart_tx:UART_TX_INST|r_Bit_Index      ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
 
 
 +-------------------------------------------------------------------+
@@ -282,6 +322,16 @@ Encoding Type:  One-Hot
 +----------------+-------+------------------------------------------+
 ; CLKS_PER_BIT   ; 5208  ; Signed Integer                           ;
 +----------------+-------+------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: uart_rx:uart_rx ;
++----------------+-------+-------------------------------------+
+; Parameter Name ; Value ; Type                                ;
++----------------+-------+-------------------------------------+
+; CLKS_PER_BIT   ; 5208  ; Signed Integer                      ;
++----------------+-------+-------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
@@ -311,22 +361,25 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 27                          ;
-;     ENA SCLR          ; 13                          ;
-;     plain             ; 14                          ;
-; arriav_lcell_comb     ; 33                          ;
-;     arith             ; 13                          ;
-;         1 data inputs ; 13                          ;
-;     normal            ; 20                          ;
-;         1 data inputs ; 1                           ;
-;         3 data inputs ; 2                           ;
-;         4 data inputs ; 5                           ;
-;         5 data inputs ; 7                           ;
-;         6 data inputs ; 5                           ;
-; boundary_port         ; 7                           ;
+; arriav_ff             ; 67                          ;
+;     ENA               ; 8                           ;
+;     ENA SCLR          ; 26                          ;
+;     plain             ; 33                          ;
+; arriav_lcell_comb     ; 97                          ;
+;     arith             ; 26                          ;
+;         1 data inputs ; 26                          ;
+;     normal            ; 71                          ;
+;         0 data inputs ; 1                           ;
+;         1 data inputs ; 7                           ;
+;         2 data inputs ; 1                           ;
+;         3 data inputs ; 5                           ;
+;         4 data inputs ; 23                          ;
+;         5 data inputs ; 14                          ;
+;         6 data inputs ; 20                          ;
+; boundary_port         ; 22                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 3.00                        ;
-; Average LUT depth     ; 2.11                        ;
+; Average LUT depth     ; 2.05                        ;
 +-----------------------+-----------------------------+
 
 
@@ -335,7 +388,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:05     ;
+; Top            ; 00:00:00     ;
 +----------------+--------------+
 
 
@@ -345,10 +398,12 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Tue Mar 26 14:20:45 2024
+    Info: Processing started: Tue Mar 26 16:33:43 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off serial -c serial
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file /users/joao2/desktop/nova pasta/uart-serial-data-transmission/hexa7seg.v
+    Info (12023): Found entity 1: hexa7seg File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/hexa7seg.v Line: 3
 Info (12021): Found 1 design units, including 1 entities, in source file /users/joao2/desktop/nova pasta/uart-serial-data-transmission/edge_detector.v
     Info (12023): Found entity 1: edge_detector File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/edge_detector.v Line: 2
 Info (12021): Found 1 design units, including 1 entities, in source file /users/joao2/desktop/nova pasta/uart-serial-data-transmission/uart_tx.v
@@ -368,24 +423,33 @@ Warning (10222): Verilog HDL Parameter Declaration warning at uart_rx.v(25): Par
 Warning (10222): Verilog HDL Parameter Declaration warning at uart_rx.v(26): Parameter Declaration in module "uart_rx" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_rx.v Line: 26
 Warning (10222): Verilog HDL Parameter Declaration warning at uart_rx.v(27): Parameter Declaration in module "uart_rx" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_rx.v Line: 27
 Info (12127): Elaborating entity "serial" for the top level hierarchy
-Info (12128): Elaborating entity "uart_tx" for hierarchy "uart_tx:UART_TX_INST" File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/serial.v Line: 21
+Warning (10034): Output port "receptor_acabou" at serial.v(12) has no driver File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/serial.v Line: 12
+Info (12128): Elaborating entity "uart_tx" for hierarchy "uart_tx:UART_TX_INST" File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/serial.v Line: 23
 Warning (10230): Verilog HDL assignment warning at uart_tx.v(68): truncated value with size 32 to match size of target (13) File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_tx.v Line: 68
 Warning (10230): Verilog HDL assignment warning at uart_tx.v(86): truncated value with size 32 to match size of target (13) File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_tx.v Line: 86
 Warning (10230): Verilog HDL assignment warning at uart_tx.v(96): truncated value with size 32 to match size of target (3) File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_tx.v Line: 96
 Warning (10230): Verilog HDL assignment warning at uart_tx.v(116): truncated value with size 32 to match size of target (13) File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_tx.v Line: 116
-Info (12128): Elaborating entity "edge_detector" for hierarchy "edge_detector:edge_detector" File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/serial.v Line: 29
+Info (12128): Elaborating entity "edge_detector" for hierarchy "edge_detector:edge_detector" File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/serial.v Line: 34
+Info (12128): Elaborating entity "uart_rx" for hierarchy "uart_rx:uart_rx" File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/serial.v Line: 43
+Warning (10230): Verilog HDL assignment warning at uart_rx.v(80): truncated value with size 32 to match size of target (13) File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_rx.v Line: 80
+Warning (10230): Verilog HDL assignment warning at uart_rx.v(91): truncated value with size 32 to match size of target (13) File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_rx.v Line: 91
+Warning (10230): Verilog HDL assignment warning at uart_rx.v(102): truncated value with size 32 to match size of target (3) File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_rx.v Line: 102
+Warning (10230): Verilog HDL assignment warning at uart_rx.v(120): truncated value with size 32 to match size of target (13) File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/uart_rx.v Line: 120
+Info (12128): Elaborating entity "hexa7seg" for hierarchy "hexa7seg:hex0" File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/serial.v Line: 60
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "receptor_acabou" is stuck at GND File: C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/serial.v Line: 12
 Info (286030): Timing-Driven Synthesis is running
-Info (17049): 2 registers lost all their fanouts during netlist optimizations.
+Info (17049): 4 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 41 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 2 input pins
-    Info (21059): Implemented 5 output pins
-    Info (21061): Implemented 34 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 15 warnings
-    Info: Peak virtual memory: 4808 megabytes
-    Info: Processing ended: Tue Mar 26 14:21:20 2024
-    Info: Elapsed time: 00:00:35
+Info (21057): Implemented 123 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 3 input pins
+    Info (21059): Implemented 19 output pins
+    Info (21061): Implemented 101 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 22 warnings
+    Info: Peak virtual memory: 4802 megabytes
+    Info: Processing ended: Tue Mar 26 16:34:02 2024
+    Info: Elapsed time: 00:00:19
     Info: Total CPU time (on all processors): 00:00:30
 
 

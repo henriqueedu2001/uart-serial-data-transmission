@@ -1,5 +1,6 @@
-serial_tb.v 
-
+# serial_tb.v 
 serial.v
 uart_rx.v
 uart_tx.v
+edge_detector.v
+hexa7seg.v

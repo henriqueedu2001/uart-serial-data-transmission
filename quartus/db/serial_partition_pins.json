@@ -4,19 +4,71 @@
 			"name" : "Top",
 			"pins" : [
 				{
-					"name" : "tx",
+					"name" : "saida_serial",
 					"strict" : false
 				},
 				{
-					"name" : "done",
+					"name" : "transmissor_acabou",
 					"strict" : false
 				},
 				{
-					"name" : "busy",
+					"name" : "transmissor_ocupado",
 					"strict" : false
 				},
 				{
-					"name" : "db_clock",
+					"name" : "hex0_out[0]",
+					"strict" : false
+				},
+				{
+					"name" : "hex0_out[1]",
+					"strict" : false
+				},
+				{
+					"name" : "hex0_out[2]",
+					"strict" : false
+				},
+				{
+					"name" : "hex0_out[3]",
+					"strict" : false
+				},
+				{
+					"name" : "hex0_out[4]",
+					"strict" : false
+				},
+				{
+					"name" : "hex0_out[5]",
+					"strict" : false
+				},
+				{
+					"name" : "hex0_out[6]",
+					"strict" : false
+				},
+				{
+					"name" : "hex1_out[0]",
+					"strict" : false
+				},
+				{
+					"name" : "hex1_out[1]",
+					"strict" : false
+				},
+				{
+					"name" : "hex1_out[2]",
+					"strict" : false
+				},
+				{
+					"name" : "hex1_out[3]",
+					"strict" : false
+				},
+				{
+					"name" : "hex1_out[4]",
+					"strict" : false
+				},
+				{
+					"name" : "hex1_out[5]",
+					"strict" : false
+				},
+				{
+					"name" : "hex1_out[6]",
 					"strict" : false
 				},
 				{
@@ -24,11 +76,15 @@
 					"strict" : false
 				},
 				{
-					"name" : "fpga_clock",
+					"name" : "iniciar_transmissao",
 					"strict" : false
 				},
 				{
-					"name" : "enable",
+					"name" : "clock",
+					"strict" : false
+				},
+				{
+					"name" : "entrada_serial",
 					"strict" : false
 				}
 			]

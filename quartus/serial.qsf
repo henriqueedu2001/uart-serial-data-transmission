@@ -52,16 +52,34 @@ set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_location_assignment PIN_M9 -to fpga_clock
-set_location_assignment PIN_AA1 -to busy
-set_location_assignment PIN_AA2 -to done
-set_location_assignment PIN_U7 -to enable
-set_location_assignment PIN_N16 -to tx
 set_location_assignment PIN_W2 -to db_botao
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name VERILOG_FILE ../hexa7seg.v
 set_global_assignment -name VERILOG_FILE ../edge_detector.v
 set_global_assignment -name VERILOG_FILE ../uart_tx.v
 set_global_assignment -name VERILOG_FILE ../uart_rx.v
 set_global_assignment -name VERILOG_FILE ../serial.v
-set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
-set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_location_assignment PIN_U21 -to hex0_out[0]
+set_location_assignment PIN_V21 -to hex0_out[1]
+set_location_assignment PIN_W22 -to hex0_out[2]
+set_location_assignment PIN_W21 -to hex0_out[3]
+set_location_assignment PIN_Y22 -to hex0_out[4]
+set_location_assignment PIN_AA22 -to hex0_out[6]
+set_location_assignment PIN_Y21 -to hex0_out[5]
+set_location_assignment PIN_AA20 -to hex1_out[0]
+set_location_assignment PIN_AB20 -to hex1_out[1]
+set_location_assignment PIN_AA19 -to hex1_out[2]
+set_location_assignment PIN_AA18 -to hex1_out[3]
+set_location_assignment PIN_AB18 -to hex1_out[4]
+set_location_assignment PIN_AA17 -to hex1_out[5]
+set_location_assignment PIN_U22 -to hex1_out[6]
+set_location_assignment PIN_M9 -to clock
+set_location_assignment PIN_B16 -to entrada_serial
+set_location_assignment PIN_U7 -to iniciar_transmissao
+set_location_assignment PIN_N16 -to saida_serial
+set_location_assignment PIN_AA2 -to transmissor_acabou
+set_location_assignment PIN_AA1 -to transmissor_ocupado
+set_location_assignment PIN_Y3 -to receptor_acabou
+set_location_assignment PIN_M6 -to zera_hexas
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
