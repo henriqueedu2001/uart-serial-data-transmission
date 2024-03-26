@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(5CEBA4F23) Path("C:/Users/PCS-ADM/Desktop/uart/uart-serial-data-transmission/quartus/output_files/") File("serial.sof") MfrSpec(OpMask(1));
+		Device PartName(5CEBA4F23) Path("C:/Users/joao2/Desktop/Nova pasta/uart-serial-data-transmission/quartus/output_files/") File("serial.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 
